@@ -1,0 +1,20 @@
+version: '2'
+services:
+  flask:
+    build: ./flask
+    image: flask
+    command: uwsgi --http-socket 0.0.0.0:5000 --wsgi-file app.py --callable app
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=flask"
+      - "traefik.frontend.rule=${TRAEFIK_FRONTEND_RULE}"
+  traefik:
+    image: traefik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/traefik.toml:/etc/traefik/traefik.toml:ro
+      - ./traefik/acme:/etc/traefik/acme
+    ports:
+     - "80:80"
+     - "443:443"
+     - "8080:8080"

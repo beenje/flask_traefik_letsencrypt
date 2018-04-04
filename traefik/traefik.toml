@@ -59,6 +59,12 @@ onDemand = false
 # Enable certificate generation on frontends Host rules. This will request a certificate from Let's Encrypt for each frontend with a Host rule.
 # For example, a rule Host:test1.traefik.io,test2.traefik.io will request a certificate with main domain test1.traefik.io and SAN test2.traefik.io.
 OnHostRule = true
+# Use a HTTP-01 acme challenge rather than TLS-SNI-01 challenge
+# Optional but recommend
+  [acme.httpChallenge]
+  # EntryPoint to use for the challenges.
+  # Required
+  entryPoint = "http"
 
 
 # Enable Docker configuration backend
